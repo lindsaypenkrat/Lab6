@@ -24,7 +24,7 @@
         .range([height,0]);
 
     let colorScale = d3.scaleOrdinal()
-        .range(d3.schemeTableau10); //CHANGE IF TIME
+        .range(d3.schemeCategory10); //CHANGE IF TIME
 
 
     const xAxis = d3.axisBottom()
