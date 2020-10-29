@@ -1,9 +1,9 @@
 function AreaChart(container){
 
 	// initialization
-	const margin = { top: 20, right: 30, bottom: 30, left: 50 };
+	const margin = { top: 20, right: 10, bottom: 30, left: 10 };
     const width = 500 - margin.left - margin.right;
-	const height = 300 - margin.top - margin.bottom;
+	const height = 200 - margin.top - margin.bottom;
 	const listeners = { brushed: null };
 	
 	const chart = d3
@@ -25,11 +25,8 @@ function AreaChart(container){
 
     const yAxis = d3.axisLeft()
 		.scale(yScale)
+		.ticks(4)
 
-	const brush = d3.brushX()
-		.extent([[0,0], [width,height]])
-		.on('brush', brushed)
-        .on('end', endBrush)
 
 
 	chart.append("g")
@@ -40,8 +37,12 @@ function AreaChart(container){
 	chart.append("path")
 		.attr('class', 'pathArea')
 
-	chart.append("g").attr('class', 'brush').call(brush);
+	const brush = d3.brushX()
+		.extent([[0,0], [width,height]])
+		.on('brush', brushed)
+		.on('end', endBrush)
 
+	chart.append("g").attr('class', 'brush').call(brush);
 	
 	function brushed(event) {
 		if (event.selection) {
@@ -54,6 +55,7 @@ function AreaChart(container){
 			listeners["brushed"]([xScale.invert(0), xScale.invert(width)]);
 		}
 	  }
+
 	
 	function update(data){  // update scales, encodings, axes (use the total count)
 
